@@ -1,2 +1,8 @@
-.DS_Store
+# Ignorar dependencias de Node.js
 node_modules/
+
+# Archivos de entorno y configuración local
+.env
+
+# Archivos generados por el sistema operativo MacOS
+.DS_Store
