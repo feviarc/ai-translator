@@ -135,3 +135,10 @@ body {
    text-align: center;
    margin-bottom: 2rem;
 }
+
+.message__flag {
+   background-color: #c5c5c5;
+   border-radius: 5px;
+   text-align: center;
+   width: 30px;
+}
