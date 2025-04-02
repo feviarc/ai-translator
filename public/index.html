@@ -15,14 +15,11 @@
    </header>
 
    <section class="chat">
-
-      <div class="chat__messages">
-
-      </div>
-
+      <div class="chat__messages"></div>
       <div class="chat__input-group">
          <input id="inputText" class="chat__input" type="text" placeholder="Escribe una palabra o frase aquí...">
          <div class="chat__inputs">
+            <button id="translateButton" class="chat__button">Traducir a</button>
             <select id="targetLang" class="chat__select">
                <option value="aleman">🇩🇪 Alemán</option>
                <option value="español de mexico">🇲🇽 Español</option>
@@ -31,10 +28,8 @@
                <option value="italiano">🇮🇹 Italiano</option>
                <option value="portugues">🇵🇹 Portugués</option>
             </select>
-            <button id="translateButton" class="chat__button">Traducir</button>
          </div>
       </div>
-
    </section>
 
    <script src="./assets/js/main.js" defer></script>

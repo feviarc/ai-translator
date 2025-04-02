@@ -14,16 +14,20 @@ const botMessageIcons = {
 };
 
 
-const createHtmlDiv = (role, text, icon) => { // role = 'user' | 'bot'
+const createMessageHtmlDiv = (role, text, icon) => {
 
-   let htmlIcon;
    const htmlDiv = document.createElement('div');
+   let styleClasses = `chat__message chat__message--${role}`;
+
+   if (icon === '400' || icon === '500') {
+      styleClasses = `${styleClasses} message__background--${icon}`;
+   }
 
    htmlDiv.textContent = text;
-   htmlDiv.className = 'chat__message chat__message--' + role;
+   htmlDiv.className = styleClasses;
 
    if (role === 'bot') {
-      htmlIcon = document.createElement('div');
+      const htmlIcon = document.createElement('div');
       htmlIcon.className = 'message__flag';
       htmlIcon.textContent = botMessageIcons[icon];
       htmlDiv.appendChild(htmlIcon);
@@ -31,7 +35,6 @@ const createHtmlDiv = (role, text, icon) => { // role = 'user' | 'bot'
 
    htmlMessagesContainer.appendChild(htmlDiv);
    htmlMessagesContainer.scrollTop = htmlMessagesContainer.scrollHeight;
-
 };
 
 
@@ -41,14 +44,12 @@ htmlTranslateButton.addEventListener('click', async () => {
    const textToTranslate = htmlInputText.value.trim();
 
    if(!textToTranslate) {
-      createHtmlDiv('bot','🤖 Escribe una palabra o frase para traducirla.', '400');
+      createMessageHtmlDiv('bot','🤖 Escribe una palabra o frase para traducirla.', '400');
       return false;
    }
 
-   // Colocar el mensaje del usuario a la caja de mensajes.
-   createHtmlDiv('user', '💬 ' + textToTranslate);
+   createMessageHtmlDiv('user', `💬 ${textToTranslate}`);
 
-   // Petición Ajax al Backend.
    try {
       const response = await fetch('/api/translate', {
          method: 'POST',
@@ -59,15 +60,13 @@ htmlTranslateButton.addEventListener('click', async () => {
          })
       });
 
-      const data = await response.json();
+      const responseData = await response.json();
       const icon = response.status === 200 ? targetLang : '500';
-      createHtmlDiv('bot', '🤖 ' + data.translatedText, icon);
+      createMessageHtmlDiv('bot', `🤖 ${responseData.translatedText}`, icon);
 
    } catch(e) {
       console.log('Error: ', e);
    }
 
-   // Borrar el contenido del input del mensaje.
    htmlInputText.value = '';
-
 });
